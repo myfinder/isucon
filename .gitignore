@@ -1,4 +1,5 @@
 *~
+webapp/perl/extlib/*
 webapp/config/hosts.json
 tools/data/isucon_*
 tools/data/isucon_*/*
