@@ -1,5 +1,5 @@
-var fs = require('fs'),
-    http = require('http'),
+var fs    = require('fs'),
+    http  = require('http'),
     child = require('child_process'),
     async = require('async');
 
@@ -285,7 +285,7 @@ function output(dirpath, load_result, checker_result, poster_result, callback){
     load_result = {response:{success:0,error:1}, summary:'fail'};
   if (! load_result.response)
     load_result.response = {success:0,error:0};
-      
+
   if (checker_result === null)
     checker_result = {summary:'init access (GET / or POST one article) failed'};
   if (poster_result === null)
