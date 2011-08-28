@@ -36,8 +36,7 @@ filter 'recent_commented_articles' => sub {
     sub {
         my ( $self, $c )  = @_;
         $c->stash->{recent_commented_articles} = $self->dbh->selectall_arrayref(
-            'SELECT a.id, a.title FROM comment c INNER JOIN article a ON c.article = a.id 
-            GROUP BY a.id ORDER BY MAX(c.created_at) DESC LIMIT 10',
+            'SELECT id, title FROM article ORDER BY comment_created_at DESC LIMIT 10',
             { Slice => {} });
         $app->($self,$c);
     }
@@ -82,6 +81,10 @@ post '/comment/:articleid' => sub {
         $c->args->{articleid},
         $c->req->param('name'), 
         $c->req->param('body')
+    );
+    $sth = $self->dbh->prepare('UPDATE article SET comment_created_at = now() WHERE id = ?');
+    $sth->execute(
+        $c->args->{articleid},
     );
     $c->redirect($c->req->uri_for('/article/'.$c->args->{articleid}));
 };
